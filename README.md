@@ -1,7 +1,7 @@
 # MTevent_Toolkit
 Contains scrips to process and analyses the MTevent dataset
 <p align="center">
-  <img src="media/scene52.gif" width="400"/>
+  <img src="media/scene52.gif" />
   
 </p>
 
