@@ -40,7 +40,6 @@ Download all the scenes to a folder which would be the root folder.
 <p align="center">
   <img src="media/scene33_human.gif" width = "500"/>
   <img src="media/scene21_forklift.gif" />
-  
 </p>
 
    
