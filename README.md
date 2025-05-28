@@ -8,8 +8,8 @@ We used a stereo setup of event cameras and one RGb camera to record and annotat
 Read our paper: [MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimation and Moving Object Detection](https://arxiv.org/abs/1234.56789)
 
 <p align="center">
-  <img src="media/cam_system.JPEG" width = "300" />
-  <img src="media/scene52.gif" width = "700"/>
+  <img src="media/cam_system.JPEG" width = "250" />
+  <img src="media/scene52.gif" width = "600"/>
   
 </p>
 
@@ -40,8 +40,8 @@ Execute Annotations/human_annotation_bbox_pose.py
    First execute mask_to_bbox. py and then execute filter_bbox.py
    The smoothened 3D bbox and pose values will be saved in folder smoothened.
 <p align="center">
-  <img src="media/scene33_human.gif" width = "500"/>
-  <img src="media/scene21_forklift.gif" width = "500" />
+  <img src="media/scene33_human.gif" width = "400"/>
+  <img src="media/scene21_forklift.gif" width = "400" />
 </p>
 
 ### Masks
@@ -52,8 +52,8 @@ Execute segment_anything.py to extract masks for human and forklift from RGB ima
 </p>
 
 ### Rigid Objects
-Execute annotation_bbox_pose.py
-The 2D, 3D BBox and 6D Pose values for all rigid objects and for all three cameras are stored in the annotation folder.
+Execute annotation_bbox_pose.py.  
+The 2D, 3D BBox and 6D Pose values for all rigid objects and for all three cameras are stored in the annotation folder. The masks for objects are stored in npy file format.
 <p align="center">
   <img src="media/scene72.gif" width = "600" />
 </p>
