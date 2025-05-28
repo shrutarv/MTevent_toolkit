@@ -38,7 +38,7 @@ Download all the scenes to a folder which would be the root folder.
    First execute mask_to_bbox. py and then execute filter_bbox.py
    The smoothened 3D bbox and pose values will be saved in folder smoothened.
 <p align="center">
-  <img src="media/scene63_mask_human.gif" />
+  <img src="media/scene33_human.gif" />
   <img src="media/scene21_forklift.gif" />
   
 </p>
@@ -46,9 +46,5 @@ Download all the scenes to a folder which would be the root folder.
    
     
 
-<p align="center">
-  <img src="media/scene63_mask_human.gif" width="400"/>
-  <img src="media/scene63_mask_obj.gif" width="300"/>
-</p>
 
 [Watch demo video](media/scene33_obj_bbox.mp4)
