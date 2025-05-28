@@ -48,7 +48,7 @@ Download all the scenes to a folder which would be the root folder.
 Execute segment_anything.py to extract masks for human and forklift from RGB images. The segmented RGB images are stored in folder output_masks_human_img. Executing annotation_bbox_pose.py will also give you the maks for the objects. The object masks are stored in folder masks_rgb_MR6D.
 <p align="center">
   <img src="media/scene63_mask_human.gif" width = "400"/>
-  <img src="media/scene63_mask_obj.gif" width = "400"/>
+  <img src="media/scene63_mask_obj.gif" width = "300"/>
 </p>
 
 ### Rigid Objects
