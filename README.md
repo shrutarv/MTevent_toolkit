@@ -4,11 +4,12 @@ Contains scrips to process and analyse the MTevent dataset.
 The MTevent dataset is designed to advance event-based perception in dynamic environments. It addresses key challenges such as occlusions, varying lighting, extreme viewing angles, and long detection distances, providing a comprehensive benchmark for event-based vision across multiple tasks—including 6D pose estimation of static and moving rigid objects, 2D motion segmentation, 3D bounding box detection, optical flow estimation, and object tracking. Annotations included in the dataset:
 1. 6D pose of rigid objects.
 2. 3D/2D bouding box coordinates of all moving objects.
-
+We used a stereo setup of event cameras and one RGb camera to record and annotate videos. Below figure shows 2 dvxplorers on either side of the RGB camera.
 Read our paper: [MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimation and Moving Object Detection](https://arxiv.org/abs/1234.56789)
 
 <p align="center">
-  <img src="media/scene52.gif" />
+  <img src="media/cam_system.jpeg" width = "500" />
+  <img src="media/scene52.gif" width = "500"/>
   
 </p>
 
@@ -46,12 +47,13 @@ Download all the scenes to a folder which would be the root folder.
 ### RGB Masks
 Execute segment_anything.py. The segmented RGB images are stored in folder output_masks_human_img.
 <p align="center">
-  <img src="media/scene63_mask_human.gif" width = "500"/>
+  <img src="media/scene63_mask_human.gif" width = "400"/>
  
 </p>
 
 ### Rigid Objects
-
+Execute annotation_bbox_pose.py
+The 2D, 3D BBox and 6D Pose values for all rigid objects and for all three cameras are stored in the annotation folder.
    
     
 
