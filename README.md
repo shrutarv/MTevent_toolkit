@@ -32,7 +32,6 @@ Download all the scenes to a folder which would be the root folder.
 
 ## Annotations
 ### Non Rigid Objects
----
 1. Execute Annotations/human_annotation_bbox_pose.py
    This scripts annotates the non rigid objects (human and forklift) with 3D BBoxes and saves the visualsations and json files in the folder annotation_human.  
    NOTE: Sometimes the annotations are incorrect for a few frames. This is due to incorrect reading from Vicon. In that case we need to smoothen the BBox for the human and forklift.  
@@ -43,6 +42,15 @@ Download all the scenes to a folder which would be the root folder.
   <img src="media/scene33_human.gif" width = "500"/>
   <img src="media/scene21_forklift.gif" width = "500" />
 </p>
+
+### RGB Masks
+Execute segment_anything.py. The segmented RGB images are stored in folder output_masks_human_img.
+<p align="center">
+  <img src="media/scene63_mask_human.gif" width = "500"/>
+ 
+</p>
+
+### Rigid Objects
 
    
     
