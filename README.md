@@ -39,7 +39,7 @@ Download all the scenes to a folder which would be the root folder.
    The smoothened 3D bbox and pose values will be saved in folder smoothened.
 <p align="center">
   <img src="media/scene33_human.gif" width = "500"/>
-  <img src="media/scene21_forklift.gif" />
+  <img src="media/scene21_forklift.gif" width = "500" />
 </p>
 
    
