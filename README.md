@@ -8,7 +8,7 @@ We used a stereo setup of event cameras and one RGb camera to record and annotat
 Read our paper: [MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimation and Moving Object Detection](https://arxiv.org/abs/1234.56789)
 
 <p align="center">
-  <img src="media/cam_system.jpeg" width = "500" />
+  <img src="media/cam_system.JPEG" width = "500" />
   <img src="media/scene52.gif" width = "500"/>
   
 </p>
