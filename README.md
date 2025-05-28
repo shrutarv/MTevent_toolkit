@@ -40,8 +40,8 @@ Execute Annotations/human_annotation_bbox_pose.py
    First execute mask_to_bbox. py and then execute filter_bbox.py
    The smoothened 3D bbox and pose values will be saved in folder smoothened.
 <p align="center">
-  <img src="media/scene33_human.gif" width = "400"/>
-  <img src="media/scene21_forklift.gif" width = "400" />
+  <img src="media/scene33_human.gif" width = "500"/>
+  <img src="media/scene21_forklift.gif" width = "500" />
 </p>
 
 ### Masks
