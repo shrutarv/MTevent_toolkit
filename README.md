@@ -55,7 +55,7 @@ Execute segment_anything.py to extract masks for human and forklift from RGB ima
 Execute annotation_bbox_pose.py
 The 2D, 3D BBox and 6D Pose values for all rigid objects and for all three cameras are stored in the annotation folder.
 <p align="center">
-  <img src="media/scene72.gif" width = "400" />
+  <img src="media/scene72.gif" width = "600" />
 </p>
     
 
