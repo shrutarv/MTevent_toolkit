@@ -24,28 +24,27 @@ Download all the scenes to a folder which would be the root folder.
 1. Execute script Data_pre_processing/extract_rgb_events_vicon_data_from_bag.py
    This script extracts rgb images, vicon data for moving rigid objects, human_head and forklift handle. The json files are saved in the folder root/scene /vicon_data/. The rgb images in .jpg format are saved in the folder root/scene /rgb.
 
-2. Execute bag_to_event_img.py
+2. Execute **bag_to_event_img.py**
    Extracts the events from left and right event camera bag files as slices. Each slice is accumulated and saved as a jpg image for visualisation purpose. The event visualisation are saved in root/scene /event_images/left and root/scene /event_images/right
 
-3. Execute extract_human_from_bag.py
+3. Execute **extract_human_from_bag.py**
    Extract non rigid objects human and forklift. Markers are plpaced on hand, feet, head and waist for human. This script considers all markers to compute 3D bbox values for human. Similarly it considers al the markers placed on forklift to compute 3D bbox.
 
 ## Annotations
 1. Execute Annotations/human_annotation_bbox_pose.py
    This scripts annotates the non rigid objects (human and forklift) with 3D BBoxes and saves the visualsations and json files in the folder annotation_human.
    NOTE: Sometimes the annotations are incorrect for a few frames. This is due to incorrect reading from Vicon. In that case we need to smoothen the BBox for the human and forklift
-   To Smoothen:
+   To **Smoothen**:
    First execute mask_to_bbox. py and then execute filter_bbox.py
    The smoothened 3D bbox and pose values will be saved in folder smoothened.
-
-2. 
+<p align="center">
+  <img src="media/scene33_human.gif" width = "500"/>
+  <img src="media/scene21_forklift.gif" />
+  
+</p>
 
    
     
 
-<p align="center">
-  <img src="media/scene63_mask_human.gif" width="400"/>
-  <img src="media/scene63_mask_obj.gif" width="300"/>
-</p>
 
 [Watch demo video](media/scene33_obj_bbox.mp4)
