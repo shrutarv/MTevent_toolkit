@@ -1,10 +1,10 @@
 # MTevent_Toolkit
 Contains scrips to process and analyse the MTevent dataset.
 
-The MTevent dataset is designed to advance event-based perception in dynamic environments. It addresses key challenges such as occlusions, varying lighting, extreme viewing angles, and long detection distances, providing a comprehensive benchmark for event-based vision across multiple tasks—including 6D pose estimation of static and moving rigid objects, 2D motion segmentation, 3D bounding box detection, optical flow estimation, and object tracking. Annotations included in the dataset:
+The MTevent dataset is designed to advance event-based perception in dynamic environments. It addresses key challenges such as occlusions, varying lighting, extreme viewing angles, and long detection distances, providing a comprehensive benchmark for event-based vision across multiple tasks—including 6D pose estimation of static and moving rigid objects, 2D motion segmentation, 3D bounding box detection, optical flow estimation, and object tracking. Annotations included in the dataset:  
 1. 6D pose of rigid objects.
-2. 3D/2D bouding box coordinates of all moving objects.
-We used a stereo setup of event cameras and one RGb camera to record and annotate videos. Below figure shows 2 dvxplorers on either side of the RGB camera.
+2. 3D/2D bouding box coordinates of all moving objects.  
+We used a stereo setup of event cameras and one RGb camera to record and annotate videos. Below figure shows 2 dvxplorers on either side of the RGB camera.  
 Read our paper: [MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimation and Moving Object Detection](https://arxiv.org/abs/1234.56789)
 
 <p align="center">
@@ -13,11 +13,11 @@ Read our paper: [MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimati
   
 </p>
 
-The dataset includes:
-Rigid objects- Objects with ids from MR6D1 to MR6D16
-Non-rigid objects - Human and forklift
-
-The link to download the dataset: [MTevent](https://huggingface.co/datasets/anas-gouda/MTevent/tree/main)
+The dataset includes:  
+Rigid objects- Objects with ids from MR6D1 to MR6D16  
+Non-rigid objects - Human and forklift  
+  
+The link to download the dataset: [MTevent](https://huggingface.co/datasets/anas-gouda/MTevent/tree/main)  
 Download all the scenes to a folder which would be the root folder.
 
 
