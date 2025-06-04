@@ -33,8 +33,9 @@ Download all the scenes to a folder which would be the root folder.
 
 ## Annotations
 ### Non Rigid Objects
+
 Execute Annotations/human_annotation_bbox_pose.py
-   This scripts annotates the non rigid objects (human and forklift) with 3D BBoxes and saves the visualsations and json files in the folder annotation_human.  
+   This scripts annotates the non rigid objects (human and forklift) with 3D BBoxes and saves the visualsations and json files in the folder annotation_human. The mesh models for objects are stored at location annotation/obj_model. This path should be changed in the script    
    NOTE: Sometimes the annotations are incorrect for a few frames. This is due to incorrect reading from Vicon. In that case we need to smoothen the BBox for the human and forklift.  
    To **Smoothen**:  
    First execute mask_to_bbox. py and then execute filter_bbox.py
