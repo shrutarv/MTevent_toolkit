@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+Created on Fri Feb  5 14:27:36 2024
+
+@author: Shrutarv Awasthi
+"""
 
 import os
 import rosbag
@@ -7,8 +12,10 @@ import numpy as np
 import queue
 import threading
 
-# Root directory where dataset is stored
+# CHANGE: Root directory where dataset is stored
 root = "/mnt/smbshare/"
+# The code extracts event data, accumulates it and stores it as a png files inside event_images # folder for both event cameras.
+# CHANGE: Specify the start and end scene numbers.
 start_scene = 52
 end_scene = 53
 # Event camera topics
@@ -17,7 +24,7 @@ event_topics = {
     "right": "/dvxplorer_right/events"
 }
 
-# Time step for slicing (in nanoseconds) - Example: 10ms
+# Time step for slicing (in nanoseconds) - Example: 7ms
 time_step_ns = 7_000_000
 
 # Check for GPU acceleration (CUDA support)

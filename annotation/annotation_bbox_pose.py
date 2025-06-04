@@ -1,5 +1,12 @@
+"""
+Created on Fri Jan 5 14:27:36 2024
+
+@author: Shrutarv Awasthi
+
+This script is used to annotate the bounding box and pose of the object in the RGB and event camera frames.
+"""
 # Transform the coordinates in RGB camera frame to event camera frame
-# RGB camera is cam0, Event camera 1 is cam1 and event camera 2 is cam2
+# RGB camera is cam1, Event camera 1 or left is cam0 and event camera 2 or right is cam2
 import numpy as np
 import cv2
 import os
@@ -9,19 +16,23 @@ from utilities import *
 import pyrender
 import torch
 
-# 1: "wooden_pallet", 2: "small_klt", 3: "big_klt", 4: "blue_klt", 5:  "Amazon basics luggage",
-# 	6:  "IKEA_Dammang _bin_with_lid", 7: "IKEA vesken trolley", 8: "IKEA sortera waste sorting bin", 9: "IKEA Drona grey", 10: "IKEA Drona blue"
-# 	11: "IKEA KNALLIG wooden box", 12: "IKEA MOPPE mini drawer", 13: "IKEA LABBSAL basket", 14: "IKEA IVAR box on wheels", 15: "IKEA SKUBB storage case",
-# 	16: "IKEA SAMLA transparent box"
+'''
+ 1: "wooden_pallet", 2: "small_klt", 3: "big_klt", 4: "blue_klt", 5:  "Amazon basics luggage",
+ 	6:  "IKEA_Dammang _bin_with_lid", 7: "IKEA vesken trolley", 8: "IKEA sortera waste sorting bin", 9: "IKEA Drona grey", 10: "IKEA Drona blue"
+ 	11: "IKEA KNALLIG wooden box", 12: "IKEA MOPPE mini drawer", 13: "IKEA LABBSAL basket", 14: "IKEA IVAR box on wheels", 15: "IKEA SKUBB storage case",
+ 	16: "IKEA SAMLA transparent box"
+Specify the scene name for which you want the annotations to be done, the objects that are present in the scene,
+the root directory of the dataset, the object model path and specify whether you want to calibrate the object centre with the vicon geometric calibration.
+The obj models and the model info are present inside the annotation folder in github repository.
+'''
 
 object_name = 'scene74'
 #obj_name = 'blue_klt'
 objects = ['MR6D12','MR6D2']
 root_dir = '/media/eventcamera/event_data/dataset_20_march_zft/'
 calib_obj_centre_vicon_geometric = False
-threshold = 10000000
-
 obj_model_path = '/home/eventcamera/RGB_Event_cam_system/Annotation/Annotation_rgb_ec/obj_model/'
+
 # import object data from json file
 with open(obj_model_path + 'models_info.json', 'r') as file:
     obj_model_data = json.load(file)
@@ -113,7 +124,7 @@ for obj_name in objects:
 
     rgb_timestamp = check_max_timestamp_rgb_event(rgb_timestamp, event_cam_left_timestamp, event_cam_right_timestamp)
 
-    # Load the vicon data of the object that is recorded using vicon when the dataset was created.
+    # Load the vicon data of the object that is recorded using vicon while recording.
     with open(json_path_object, 'r') as file:
         vicon_object_data = json.load(file)
     # extract only timestamp in a numpy array from dictionary loaded_array
@@ -126,8 +137,10 @@ for obj_name in objects:
     #rgb_timestamp = remove_extension_and_convert_to_int(rgb_timestamp)
     event_cam_left_timestamp = remove_extension_and_convert_to_int(event_cam_left_timestamp)
     event_cam_right_timestamp = remove_extension_and_convert_to_int(event_cam_right_timestamp)
-
-    # Associate timestamps in both event cameras to rgb camera timestamps.
+    '''
+    RGB camera acts as a bottleneck. Therefore, associate timestamps in both event cameras to rgb camera timestamps.
+    We find the closed timestamps to rgb camera timestamps for both event cameras.
+    '''
     timestamp_vicon_object = list(map(int, timestamp_vicon_object))
     dict_rgb_viconObject = find_closest_elements(rgb_timestamp,
                                         timestamp_vicon_object)  # Output in format (rgb_timestamp, timestamp_vicon_object)
@@ -141,12 +154,12 @@ for obj_name in objects:
         json.dump(dict_rgb_ec_left, file)
     with open(path + '_closest_ec_right.json', 'w') as file:
         json.dump(dict_rgb_ec_right, file)
-    '''
+    
     # remove delayed timestamps. There could be timestamps which are further apart than the expected time difference between the images.
-    #dict_rgb_ec_left = remove_delayed_timestamps(dict_rgb_ec_left, threshold)
-    #dict_rgb_ec_right = remove_delayed_timestamps(dict_rgb_ec_right, threshold)
-    #result_dict = remove_delayed_timestamps(dict_rgb_viconObject, threshold)
-
+    dict_rgb_ec_left = remove_delayed_timestamps(dict_rgb_ec_left, threshold)
+    dict_rgb_ec_right = remove_delayed_timestamps(dict_rgb_ec_right, threshold)
+    result_dict = remove_delayed_timestamps(dict_rgb_viconObject, threshold)
+    '''
     timestamp_closest_ec_left = list(dict_rgb_ec_left.values())
     timestamp_closest_ec_right = list(dict_rgb_ec_right.values())
 
@@ -181,8 +194,9 @@ for obj_name in objects:
     with open(json_path_camera_sys, 'r') as f:
         vicon_data_camera_sys = json.load(f)
     save_transformations(vicon_data_camera_sys, H_cam_sys_2_rgb, vicon_object_data.copy(), H_rgb_2_left, H_right_2_rgb, path, H_vicon_to_object_uncalibrated_to_calibrated)
+    #################################################
 
-    ################## ANNOTATIONS #################
+    ################## ANNOTATIONS  #################
     count = 0
     with open(path + '_transformations.json', 'r') as file:
         projected_point_rgb_ec1_ec2 = json.load(file)
@@ -225,8 +239,6 @@ for obj_name in objects:
         ############ RGB Image ############
         H_rgb_2_object = np.array(projected_point_rgb_ec1_ec2[str(k)]['H_rgb_2_object'])
 
-
-
         H_camera_object = np.linalg.inv(H_rgb_2_object)
         # Create a pyrender scene
         scene = pyrender.Scene()
@@ -260,10 +272,7 @@ for obj_name in objects:
         cv2.imshow("RGB with Object Mask", blended)
         cv2.waitKey(0)
 
-
-
-
-
+        ############# RGB image annotations ###############
         # True is given if you want to save the bounding box and pose data of the object.
         img_rgb = project_points_to_image_plane(obj_name, H_rgb_2_object, k, rgb_t, rgb_img_path, points_3d, vertices,
                                                         camera_mtx_rgb, distortion_coefficients_rgb, output_dir_rgb, folder_path, obj_iter, True)
@@ -271,7 +280,7 @@ for obj_name in objects:
         if len(objects) > 1:
             cv2.imwrite(rgb_img_path, img_rgb)
 
-        ############ Event camera left ############
+        ############ Event camera left annotations ############
         event_t = 0
         H_left_2_object = np.array(projected_point_rgb_ec1_ec2[str(k)]['H_left_2_object'])
         img_event_cam_left = project_points_to_image_plane(obj_name, H_left_2_object, ec_left, event_t, event_cam_left, points_3d, vertices,
@@ -279,7 +288,7 @@ for obj_name in objects:
         if len(objects) > 1:
             cv2.imwrite(event_cam_left, img_event_cam_left)
 
-        ############ Event camera right ############
+        ############ Event camera right annotations ############
         H_right_2_object = np.array(projected_point_rgb_ec1_ec2[str(k)]['H_right_2_object'])
         # shift the transformation to 1 unit in positive z and 1 unit in negative y
 
@@ -306,38 +315,3 @@ for obj_name in objects:
         count += 1
         cv2.destroyAllWindows()
     obj_iter += 1
-'''
-rgb_timestamp = os.listdir(root_dir + object_name + '/rgb/')
-rgb_timestamp.sort()
-number_of_objects = len(objects)
-
-if number_of_objects > 1:
-    for obj in objects:
-        # subtract the maks of all other objects from the mask of the current object
-        # get the mask of the object
-        mask_dir = os.listdir(root_dir + object_name + '/masks_rgb_' + obj + '/')
-        mask_dir.sort()
-        # remove all png files from mask_dir
-        mask_dir = [x for x in mask_dir if x.endswith(".npy")]
-        # get the mask of the other objects
-        other_objects = [x for x in objects if x != obj]
-        for other_obj in other_objects:
-            mask_dir_other = os.listdir(root_dir + object_name + '/masks_rgb_' + other_obj + '/')
-            mask_dir_other.sort()
-            mask_dir_other = [x for x in mask_dir_other if x.endswith(".npy")]
-            for i in mask_dir:
-                mask_other = np.load(root_dir + object_name + '/masks_rgb_' + other_obj + '/' + i)
-                mask = np.load(root_dir + object_name + '/masks_rgb_' + obj + '/' + i)
-                # change mask_other to 0 and 1 instead of 0 and 255
-                mask_other = mask_other / 255
-                mask = mask * (1 - mask_other)
-                np.save(root_dir + object_name + '/masks_rgb_' + obj + '/' + i, mask)
-                # remove .npy extension from i and add.jpy extension
-                i = i[:-4] + '.jpg'
-                cv2.imwrite(root_dir + object_name + '/masks_rgb_' + obj + '/' + i, mask)
-
-
-
-    #get_masks_visible_object(objects, root_dir, object_name)
-
-'''

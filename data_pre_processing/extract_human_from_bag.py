@@ -20,18 +20,17 @@ from dataClass import DataClass
 objects_list = ['pallet', 'small_klt', 'big_klt', 'blue_klt', 'shogun_box', 'kronen_bier_crate', 'brinkhoff_bier_crate',
                 'zivid_cardboard_box', 'dell_carboard_box', 'ciatronic_carboard_box', 'human', ' hupfwagon', 'mobile_robot']
 obj = ['human_LH','human_RH', 'human_LL', 'human_RL', 'human_head', 'human_waist']
-
- # list objects other than human. such as table, hupwagen, etc.
-flag = 1
+'''
+The human has markers on right hand (RH), left hand (LH), left leg (LL), right leg (RL), head and waist.
+These markers are tracked under the topic /vicon_markers in the rosbag file. This code extract the data for these markers
+and creates a 3D bounding box for the human in the scene and saves the 3D BBox data.
+'''
+ # list objects other than human. such as table, hupwagen(forklift), etc.
 count = 0
-#folder_name = 'scene12'
 vicon_data = {}
-root = '/media/eventcamera/event_data/dataset_25_march_zft/'
-
-
+root = '/media/eventcamera/event_data/dataset_25_march_zft/' # CHANGE: Directory where the folders for all the scenes are present and also the scene_data.json file.
 
 def get_rotation_hupwagen(timestamp):
-    # read json file
 
     if str(timestamp) not in hupwagen_data.keys():
         timestamp = min(hupwagen_data.keys(), key=lambda x: abs(int(x) - int(str(timestamp))))
@@ -41,6 +40,7 @@ def get_rotation_hupwagen(timestamp):
 with open(root + "/scene_data.json", "r") as file:
     scenes_data = json.load(file)
 
+# Loop through all the scenes in the scene_data.json file
 for scene, o in scenes_data.items():
     path = root + scene + '/'
     with open(path + 'vicon_data/hupwagen.json', 'r') as json_file:
@@ -51,17 +51,12 @@ for scene, o in scenes_data.items():
         else:
             hupwagen = True
     for object in obj:
-
+        # Loops through al the human objects
         print('Extracting data for object: ', object, ' with scene: ', scene)
         object_name = object
 
-        # This scripts extracts the topics /dvxplorer_left/events, /vicon/event_cam_sys/event_cam_sys, /rgb/image_raw,
-        # /dvxplorer_right/events from the bag file.
-        # To extract RGB images, execute extract_rgb_img_from_bag.py Read the bag file
         bag = rosbag.Bag(root + scene + '/all.bag')
 
-        # Extract the topics /dvxplorer_left/events, /vicon/event_cam_sys/event_cam_sys, /rgb/image_raw, /dvxplorer_right/events
-        # from the bag file
         vicon_object = '/vicon/' + object + '/' + object
         vicon_human = '/vicon/markers'
         time_LH = []
@@ -71,9 +66,6 @@ for scene, o in scenes_data.items():
         time_moroKopf = []
         size = 400000
         vicon_data = {}
-
-            # events_left = bag.read_messages(events_topic_left)
-
 
         if not os.path.exists(path + '/vicon_data'):
             os.makedirs(path + '/vicon_data')
@@ -132,7 +124,7 @@ for scene, o in scenes_data.items():
 
 
     def check_value(data, prev_t, present_t):
-        # compare all the x,y and z values at current time with the previous time. If the mod of difference is greater than 0.6 then keep the previous value
+        # compare all the x,y and z values at current time with the previous time. If the mod of difference is greater than 2 then keep the previous value
         # else keep the current value
         data[present_t]['min_x'] = data[prev_t]['min_x'] if abs(
             data[present_t]['min_x'] - data[prev_t]['min_x']) > 2 else data[present_t]['min_x']
@@ -150,7 +142,7 @@ for scene, o in scenes_data.items():
         return data
 
 
-
+    # Initialise variables. The below variables are useful for BBox calculation.
     max_x = -100000
     max_y = -100000
     max_z = -100000
@@ -165,7 +157,7 @@ for scene, o in scenes_data.items():
     save_index = []
     count = 0
     entry_flag = True
-    bag = rosbag.Bag(root + scene + '/all.bag')
+    bag = rosbag.Bag(root + scene + '/all.bag') # all-bag contains all the vicon data for human
     # define an empty string
     previous_t = ''
 
@@ -175,7 +167,7 @@ for scene, o in scenes_data.items():
         count = count + 1
         t = msg.header.stamp
         if first_flag == 0:
-            # msg consists of all the markers in the scene. We need to find the markers which are not occluded and have the name human
+            # msg consists of all the markers in the scene. We need to find the markers which are not occluded and have the word human in them
             for j in range(int(len(msg.markers))):
                 # if the marker_name contains human in the name string then save that value in a list
                 if msg.markers[j].marker_name.find('human') != -1:
@@ -198,7 +190,7 @@ for scene, o in scenes_data.items():
                 if msg.markers[i].translation.x > max_x:
                     max_x = msg.markers[i].translation.x
                     # truncate the last character of the marker_name to get the human part
-                    rot = get_rot('human_head', t)
+                    rot = get_rot('human_head', t)          # We assume the rotation of the human head is the same as the rotation of the human body
                 if msg.markers[i].translation.y > max_y:
                     max_y = msg.markers[i].translation.y
                     rot = get_rot('human_head', t)
@@ -220,28 +212,7 @@ for scene, o in scenes_data.items():
 
 
         if save_flag:
-            '''
-            for k in save_index:
-                # if the marker_name contains human in the name string then save that value in a list
-                if msg.markers[k].marker_name.find('human_waist1') != -1:
-                    x = msg.markers[k].translation.x
-                    y = msg.markers[k].translation.y
-                    z = msg.markers[k].translation.z
-
-            if max_x - min_x > 1200 :
-                # check the distance between the xmin and xmax
-                print('difference between max_x and min_x is ', max_x - min_x)
-                max_x = x + 500
-                min_x = x - 500
-
-            if max_y - min_y > 1200:
-                # check the distance between the ymin and ymax
-                print('difference between max_y and min_y is ', max_y - min_y)
-                max_y = y + 500
-                min_y = y - 500
-
-            '''
-
+            # save the min and max values of x, y, z and rotation to a json file
             vicon_data[str(t)] = {'min_x': min_x, 'min_y': min_y, 'min_z': 0.1, 'max_x': max_x, 'max_y': max_y,
                                   'max_z': max_z, 'rotation': rot, 'timestamp': str(t)}
             #vicon_data = check_value(vicon_data, previous_t, str(t))
@@ -250,7 +221,7 @@ for scene, o in scenes_data.items():
                 json.dump(vicon_data, json_file, indent=2)
     print('saved human bbox data')
 
-
+# Do the same for hupwagen or forklift if it exists in the scene. Hupwagen has 2 topics hupwagen_body and hupwagen_handle.
     vicon_object = '/vicon/markers'
     vicon_data = {}
     save_index = []

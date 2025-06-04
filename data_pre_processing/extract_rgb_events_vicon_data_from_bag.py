@@ -4,6 +4,11 @@
 Created on Fri Jan  5 14:27:36 2024
 
 @author: Shrutarv Awasthi
+
+This script extracts the data from 2 event cameras in npy files, extracts the ego motion of the camera system in vicon frame,
+raw rgb images from the rgb camera. They can also be converted to sRGB format. Extract data for all the objects in the scene,
+human_head and hupwagen_handle. The human and hupwagen need to be processed further by executing the script extract_human_from_bag.py.
+All data is stored in separate json files.
 """
 
 import rospy
@@ -23,17 +28,14 @@ from datetime import datetime
 sRGB = True
 objects_list = ['pallet', 'small_klt', 'big_klt', 'blue_klt', 'shogun_box', 'kronen_bier_crate', 'brinkhoff_bier_crate',
                 'zivid_cardboard_box', 'dell_carboard_box', 'ciatronic_carboard_box', 'human', ' hupfwagon', 'mobile_robot']
-#obj = ['human', 'zivid','hupwagen']
-#objects = ['MR6D2']
-#object_name = 'scene33'
+# Initialise flags to specify if human and hupwagen are present in the scene
 human = True
 hup = True
-table = False
 num = [1]
 flag = 1
 rgb_topic = '/camera/image_raw'
-root = '/mnt/smbshare/'
-with open(root + "scene_data.json", "r") as file:
+root = '/mnt/smbshare/'         # CHANGE THIS TO YOUR ROOT DIRECTORY
+with open(root + "scene_data.json", "r") as file:       # Scene_data.json contains the scene names and objects in each scene. Should be updated
     scenes_data = json.load(file)
 
 def linear_to_srgb(image):
@@ -67,10 +69,6 @@ for scene, objects in scenes_data.items():
         print('Extracting data for object: ', object, ' for scene: ', scene)
         #object_name = object + '_' + str(k)
 
-        # This scripts extracts the topics /dvxplorer_left/events, /vicon/event_cam_sys/event_cam_sys, /rgb/image_raw,
-        # /dvxplorer_right/events from the bag file.
-        # To extract RGB images, execute extract_rgb_img_from_bag.py Read the bag file
-
         path = root + object_name + '/'
         bag_all = rosbag.Bag(root + object_name + '/all.bag')
         bag_event_left = rosbag.Bag(root + object_name + '/left.bag')
@@ -99,7 +97,10 @@ for scene, objects in scenes_data.items():
         count = 0
 
         if flag == 1:
+
             '''
+            UNCOMMENT: if you want to save event data in .npy files
+            
             # mkdir if path does not exist
             if not os.path.exists(path + 'event_cam_left_npy'):
                 os.mkdir(path + 'event_cam_left_npy')
@@ -266,9 +267,6 @@ for scene, objects in scenes_data.items():
         with open(path + 'vicon_data/' + object + '.json', 'w') as json_file:
             json.dump(vicon_data, json_file, indent=2)
         print('saved object data')
-
-
-
 
     bag_all.close()
     bag_event_left.close()
