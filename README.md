@@ -1,4 +1,4 @@
-# MTevent_Toolkit
+# MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimation and Moving Object Detection
 Contains scrips to process and analyse the MTevent dataset.
 
 The MTevent dataset is designed to advance event-based perception in dynamic environments. It addresses key challenges such as occlusions, varying lighting, extreme viewing angles, and long detection distances, providing a comprehensive benchmark for event-based vision across multiple tasks—including 6D pose estimation of static and moving rigid objects, 2D motion segmentation, 3D bounding box detection, optical flow estimation, and object tracking. Annotations included in the dataset:  
