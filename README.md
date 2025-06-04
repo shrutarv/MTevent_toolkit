@@ -22,7 +22,7 @@ Download all the scenes to a folder which would be the root folder.
 
 
 ## Data pre-processing
-1. Execute script Data_pre_processing/extract_rgb_events_vicon_data_from_bag.py
+1. Execute script Data_pre_processing/extract_rgb_events_vicon_data_from_bag.py  
    This script extracts rgb images, vicon data for moving rigid objects, human_head and forklift handle. The json files are saved in the folder root/scene /vicon_data/. The rgb images in .jpg format are saved in the folder root/scene /rgb.
 
 2. Execute **bag_to_event_img.py**
