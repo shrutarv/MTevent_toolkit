@@ -58,6 +58,9 @@ The 2D, 3D BBox and 6D Pose values for all rigid objects and for all three camer
 <p align="center">
   <img src="media/scene72.gif" width = "600" />
 </p>
+
+
+<pre> ## 📚 Citation If you use this dataset, please cite: ```bibtex @inproceedings{awasthi2025mtevent, title={MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimation and Moving Object Detection}, author={Awasthi, Shrutarv and Gouda, Anas and Franke, Sven and Rutinowski, J{\'e}r{\^o}me and Hoffmann, Frank and Roidl, Moritz}, booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference}, pages={5063--5071}, year={2025} } ``` </pre>
     
 
 
