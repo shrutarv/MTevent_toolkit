@@ -16,6 +16,7 @@ Read our paper: [MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimati
 The dataset includes:  
 Rigid objects- Objects with ids from MR6D1 to MR6D16  
 Non-rigid objects - Human and forklift  
+The **mesh models** for rigid objects are stored at location annotation/obj_model
   
 The link to download the dataset: [MTevent](https://huggingface.co/datasets/anas-gouda/MTevent/tree/main)  
 Download all the scenes to a folder which would be the root folder.
