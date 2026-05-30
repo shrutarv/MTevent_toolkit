@@ -1,3 +1,4 @@
+<img width="800" height="640" alt="scene_42" src="https://github.com/user-attachments/assets/308051e8-c6cc-4fed-b95a-bd106ca93f84" />
 # MTevent: A Multi-Task Event Camera Dataset for 6D Pose Estimation and Moving Object Detection [[arXiv](https://arxiv.org/abs/2505.11282)] [[CVF](https://openaccess.thecvf.com/content/CVPR2025W/EventVision/html/Awasthi_MTevent_A_Multi-Task_Event_Camera_Dataset_for_6D_Pose_Estimation_CVPRW_2025_paper.html)]  
 
 Contains scrips to process and analyse the MTevent dataset.
@@ -67,6 +68,7 @@ MTevent was validated for the task of moving object detection using Recurrent Vi
 </p>
 
 https://github.com/user-attachments/assets/a872b1d1-346b-48a2-81ca-8b1e21a079a5
+<img width="800" height="640" alt="scene_42" src="https://github.com/user-attachments/assets/ab0c9870-dcb3-4a1b-ab0f-4f4af6c89b42" />
 
 The green box shows the predictions and the black box shows the ground truth.
 
