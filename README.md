@@ -67,9 +67,9 @@ MTevent was validated for the task of moving object detection using Recurrent Vi
 <img width="650" height="650" alt="image" src="https://github.com/user-attachments/assets/810d77be-4d75-4cf8-ac87-67fcf45ce2a2" />
 </p>
 
-https://github.com/user-attachments/assets/a872b1d1-346b-48a2-81ca-8b1e21a079a5
 
 
+https://github.com/user-attachments/assets/44f2607e-16ff-4539-9dd8-76011e54e639
 
 
 
