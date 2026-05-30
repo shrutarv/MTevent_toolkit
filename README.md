@@ -3,7 +3,8 @@
 
 Contains scrips to process and analyse the MTevent dataset.
 
-The MTevent dataset is designed to advance event-based perception in dynamic environments. It addresses key challenges such as occlusions, varying lighting, extreme viewing angles, and long detection distances, providing a comprehensive benchmark for event-based vision across multiple tasks—including 6D pose estimation of static and moving rigid objects, 2D motion segmentation, 3D bounding box detection, optical flow estimation, and object tracking. Annotations included in the dataset:  
+The MTevent dataset is designed to advance event-based perception in dynamic environments. It addresses key challenges such as occlusions, varying lighting, extreme viewing angles, and long detection distances, providing a comprehensive benchmark for event-based vision across multiple tasks—including 6D pose estimation of stati
+c and moving rigid objects, 2D motion segmentation, 3D bounding box detection, optical flow estimation, and object tracking. Annotations included in the dataset:  
 1. 6D pose of rigid objects.
 2. 3D/2D bouding box coordinates of all moving objects.  
 We used a stereo setup of event cameras and one RGb camera to record and annotate videos. Below figure shows 2 dvxplorers on either side of the RGB camera.  
@@ -69,6 +70,8 @@ MTevent was validated for the task of moving object detection using Recurrent Vi
 
 https://github.com/user-attachments/assets/a872b1d1-346b-48a2-81ca-8b1e21a079a5
 <img width="800" height="640" alt="scene_42" src="https://github.com/user-attachments/assets/ab0c9870-dcb3-4a1b-ab0f-4f4af6c89b42" />
+<img width="800" height="640" alt="scene_42online-video-cutter com-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/159cd8c2-d77c-439a-8f1a-bf257c340f93" />
+
 
 The green box shows the predictions and the black box shows the ground truth.
 
